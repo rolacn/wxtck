@@ -4,11 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
-
-/**
- * The persistent class for the s_role database table.
- * 
- */
 @Entity
 @Table(name="s_role")
 @NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")

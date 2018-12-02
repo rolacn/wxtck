@@ -6,11 +6,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-
-/**
- * The persistent class for the b_tckorder database table.
- * 
- */
 @Entity
 @Table(name="b_tckorder")
 @NamedQuery(name="TicketOrder.findAll", query="SELECT t FROM TicketOrder t")
