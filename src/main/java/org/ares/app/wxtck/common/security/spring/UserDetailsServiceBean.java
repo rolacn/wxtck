@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import cn.inctech.app.common.security.rbac.dao.RbacMapper;
-import cn.inctech.app.common.security.rbac.model.SUser;
+import org.ares.app.wxtck.common.security.rbac.dao.RbacDao;
+import org.ares.app.wxtck.common.security.rbac.model.SUser;
 
 public class UserDetailsServiceBean implements UserDetailsService {
 
@@ -30,6 +30,7 @@ public class UserDetailsServiceBean implements UserDetailsService {
         cu.getRoles().stream().forEach(e->auth.add(new SimpleGrantedAuthority(e.getRolename())));
 		user.setAuthorities(auth);
         return user;*/
+		return null;
     }  
 
 	final Logger log = LoggerFactory.getLogger(this.getClass());
