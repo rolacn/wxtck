@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="wxtck">
+		<class>org.ares.app.wxtck.sys.entity.PayLog</class>
+		<class>org.ares.app.wxtck.sys.entity.TicketOrder</class>
+		<class>org.ares.app.wxtck.sys.entity.TicketPolicy</class>
+		<class>org.ares.app.wxtck.sys.entity.Tourist</class>
+		<class>org.ares.app.wxtck.sys.entity.TouristTicket</class>
+		<class>org.ares.app.wxtck.sys.entity.Role</class>
+		<class>org.ares.app.wxtck.sys.entity.User</class>
+	</persistence-unit>
+</persistence>
