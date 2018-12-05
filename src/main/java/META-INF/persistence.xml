@@ -8,5 +8,6 @@
 		<class>org.ares.app.wxtck.sys.entity.TouristTicket</class>
 		<class>org.ares.app.wxtck.sys.entity.Role</class>
 		<class>org.ares.app.wxtck.sys.entity.User</class>
+		<class>org.ares.app.wxtck.sys.entity.Res</class>
 	</persistence-unit>
 </persistence>

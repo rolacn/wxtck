@@ -52,7 +52,9 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     	}
 		http.authorizeRequests()
 		.antMatchers(kaptcha_url,UA_CSS, UA_JS, UA_FONTS, UA_FAVICON,U_LOGIN,U_LOGOUT,U_LOGIN_PAGE,UA_TEST,U_SMS_CODE+"/*",U_SYS_CODE+"/*",UA_USER_REGIST).permitAll()
-		.antMatchers("/","/sys/**","/talents/**").hasAnyAuthority("jobseeker")
+		.antMatchers("/","/sys/**").hasAnyAuthority("tourist","seller")
+		.antMatchers("/seller").hasAnyAuthority("seller")
+		.antMatchers("/tourist/**").hasAnyAuthority("tourist")
 		.antMatchers("/**").hasAnyAuthority("admin")
 		.anyRequest().fullyAuthenticated()
 		.and().formLogin().successHandler(new AuthenticationSuccessHandler() {
@@ -79,54 +81,10 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 		
 		http.headers().frameOptions().sameOrigin(); // 允许来自同一来源的 控制台的请求
 		//http.csrf().disable();
-        http.csrf().ignoringAntMatchers(U_LOGIN+"*",SYS_PATH+"/**",U_LOGOUT+"*","/talents/**");
+        http.csrf().ignoringAntMatchers(U_LOGIN+"*",SYS_PATH+"/**",U_LOGOUT+"*","/tourist/**","/seller/**");
 	}
-	
-    protected void xxconfigure(HttpSecurity http) throws Exception {
-    	if(use_kaptcha) {
-    		KaptchaAuthenticationFilter kaf=new KaptchaAuthenticationFilter(U_LOGIN, U_LOGIN_ERROR);
-    		kaf.setParam_name(param_name);
-    		kaf.setSkey(skey);
-    		http.addFilterBefore(kaf, UsernamePasswordAuthenticationFilter.class)/*.csrf().disable()*/;
-    	}
-		http
-            .authorizeRequests().antMatchers(kaptcha_url,UA_CSS, UA_JS, UA_FONTS, UA_FAVICON,U_LOGIN,/*U_LOGOUT,*/U_LOGIN_PAGE,UA_TEST,U_SMS_CODE+"/*",UA_USER_REGIST).permitAll()
-            //.and().csrf().disable()
-            .and().formLogin()
-            .successHandler(new AuthenticationSuccessHandler() {
-                @Override
-                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth) throws IOException, ServletException {
-                	String cur_user=auth.getName();
-                	log.debug("[current user:]"+cur_user+" has logged in"+auth.getAuthorities());
-                	for(Object o:auth.getAuthorities())
-                		log.info("auth is:"+o);
-                	currentUser.put(CU_KEY_USERNAME, cur_user);
-                	currentUser.put(CU_KEY_USERROLE, auth.getAuthorities());
-                	request.getRequestDispatcher(U_LOGIN_SUCCESS).forward(request, response);
-                }
-            })
-            .loginProcessingUrl(U_LOGIN)
-            .loginPage(U_LOGIN_PAGE).failureUrl(U_LOGIN_PASS_ERROR)//不指定地址直接奔/login?error method='post'
-            .permitAll()
-            .and().logout().logoutUrl(U_LOGOUT).logoutSuccessUrl(U_LOGIN_PAGE).permitAll().invalidateHttpSession(true)
-            .and().rememberMe().key(KEY) // 启用 remember me
-            .and().exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
-				@Override
-				public void handle(HttpServletRequest request, HttpServletResponse response,AccessDeniedException e) throws IOException, ServletException {
-					log.info("[username is:] "+currentUser.get(CU_KEY_USERNAME)+", [auth is:] "+currentUser.get(CU_KEY_USERROLE)+":"+request.getRequestURI()+":"+e.getMessage());
-					/*log.info(url+" : "+e.getMessage());
-					e.printStackTrace();*/
-				}
-            }).accessDeniedPage("/403");
-		http.headers().frameOptions().sameOrigin(); // 允许来自同一来源的 控制台的请求
-        http.csrf().ignoringAntMatchers(U_LOGIN+"*",SYS_PATH+"/**");
-        
-        http.authorizeRequests().antMatchers("/","/sys/userinfo").hasAnyAuthority("jobseeker")
-        .antMatchers("/**").hasAnyAuthority("admin");
-        
-    }
     
-    static final String KEY = "inctech.cn";
+    static final String KEY = "org_ares";
     
     @Value("${webapp.content_type.json}") String json_content_type;
     @Value("${kaptcha.chkurl:/sys/img_code}") String kaptcha_url;

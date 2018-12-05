@@ -25,12 +25,6 @@ import org.ares.app.wxtck.common.mvc.SysMvcInterceptor;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
-	/*@Override
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
-				.allowCredentials(true).maxAge(3600);
-	}*/
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Bean
 	public FilterRegistrationBean corsFilter() {
@@ -48,7 +42,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(sysMvcInterceptor()).addPathPatterns("/talents/**").excludePathPatterns("/sys/**").excludePathPatterns("/login**");
+		registry.addInterceptor(sysMvcInterceptor()).addPathPatterns("/**").excludePathPatterns("/sys/**").excludePathPatterns("/login**");
 		super.addInterceptors(registry);
 	}
 

@@ -1,14 +1,20 @@
 package org.ares.app.wxtck.sys.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- * The persistent class for the b_tourtck database table.
- * 
- */
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name="b_tourtck")
 @NamedQuery(name="TouristTicket.findAll", query="SELECT t FROM TouristTicket t")
@@ -17,117 +23,25 @@ public class TouristTicket implements Serializable {
 
 	@Id
 	private int ttid;
-
 	private String ttdescr;
-
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ttlastusetime;
-
 	private String ttqrcode;
-
 	private String ttstate;
-
 	private int ttusecount;
-
 	@Temporal(TemporalType.DATE)
 	private Date ttvalidate;
 
-	//bi-directional many-to-one association to TicketOrder
 	@ManyToOne
 	@JoinColumn(name="ordid")
-	private TicketOrder BTckorder;
+	private TicketOrder tckorder;
 
-	//bi-directional many-to-one association to TicketPolicy
 	@ManyToOne
 	@JoinColumn(name="tpid")
-	private TicketPolicy BTckpolicy;
+	private TicketPolicy tckpolicy;
 
-	//bi-directional many-to-one association to Tourist
 	@ManyToOne
 	@JoinColumn(name="openid")
-	private Tourist BTourist;
-
-	public TouristTicket() {
-	}
-
-	public int getTtid() {
-		return this.ttid;
-	}
-
-	public void setTtid(int ttid) {
-		this.ttid = ttid;
-	}
-
-	public String getTtdescr() {
-		return this.ttdescr;
-	}
-
-	public void setTtdescr(String ttdescr) {
-		this.ttdescr = ttdescr;
-	}
-
-	public Date getTtlastusetime() {
-		return this.ttlastusetime;
-	}
-
-	public void setTtlastusetime(Date ttlastusetime) {
-		this.ttlastusetime = ttlastusetime;
-	}
-
-	public String getTtqrcode() {
-		return this.ttqrcode;
-	}
-
-	public void setTtqrcode(String ttqrcode) {
-		this.ttqrcode = ttqrcode;
-	}
-
-	public String getTtstate() {
-		return this.ttstate;
-	}
-
-	public void setTtstate(String ttstate) {
-		this.ttstate = ttstate;
-	}
-
-	public int getTtusecount() {
-		return this.ttusecount;
-	}
-
-	public void setTtusecount(int ttusecount) {
-		this.ttusecount = ttusecount;
-	}
-
-	public Date getTtvalidate() {
-		return this.ttvalidate;
-	}
-
-	public void setTtvalidate(Date ttvalidate) {
-		this.ttvalidate = ttvalidate;
-	}
-
-	public TicketOrder getBTckorder() {
-		return this.BTckorder;
-	}
-
-	public void setBTckorder(TicketOrder BTckorder) {
-		this.BTckorder = BTckorder;
-	}
-
-	public TicketPolicy getBTckpolicy() {
-		return this.BTckpolicy;
-	}
-
-	public void setBTckpolicy(TicketPolicy BTckpolicy) {
-		this.BTckpolicy = BTckpolicy;
-	}
-
-	public Tourist getBTourist() {
-		return this.BTourist;
-	}
-
-	public void setBTourist(Tourist BTourist) {
-		this.BTourist = BTourist;
-	}
-
+	private Tourist tourist;
+	
 }

@@ -5,22 +5,23 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.ares.app.wxtck.common.security.rbac.dao.jpa.UserDao;
+import org.ares.app.wxtck.sys.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import org.ares.app.wxtck.common.security.rbac.dao.RbacDao;
-import org.ares.app.wxtck.common.security.rbac.model.SUser;
+import lombok.extern.slf4j.Slf4j;
 
-public class UserDetailsServiceBean implements UserDetailsService {
+@Slf4j
+public class UserDetailsServiceJpaBean implements UserDetailsService {
 
 	@Override  
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        /*SUser cu=rm.getUserByUsername(username);
+        User cu=userDao.findById(username).get();
+        log.debug(cu+"");
         if (cu == null)
 			throw new UsernameNotFoundException("username not found");
         UserDetailsModel user = new UserDetailsModel();
@@ -29,10 +30,8 @@ public class UserDetailsServiceBean implements UserDetailsService {
         Set<GrantedAuthority> auth = new HashSet<>();
         cu.getRoles().stream().forEach(e->auth.add(new SimpleGrantedAuthority(e.getRolename())));
 		user.setAuthorities(auth);
-        return user;*/
-		return null;
+        return user;
     }  
 
-	final Logger log = LoggerFactory.getLogger(this.getClass());
-	
+	@Resource UserDao userDao;
 }

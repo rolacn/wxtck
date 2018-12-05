@@ -1,9 +1,20 @@
 package org.ares.app.wxtck.sys.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name="s_user")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
@@ -12,15 +23,11 @@ public class User implements Serializable {
 
 	@Id
 	private String username;
-
 	private String email;
-
 	private String password;
-
 	private String status;
 
-	//bi-directional many-to-many association to Role
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 		name="s_user_role"
 		, joinColumns={
@@ -30,49 +37,6 @@ public class User implements Serializable {
 			@JoinColumn(name="roleid")
 			}
 		)
-	private List<Role> SRoles;
-
-	public User() {
-	}
-
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public List<Role> getSRoles() {
-		return this.SRoles;
-	}
-
-	public void setSRoles(List<Role> SRoles) {
-		this.SRoles = SRoles;
-	}
-
+	private List<Role> roles;
+	
 }

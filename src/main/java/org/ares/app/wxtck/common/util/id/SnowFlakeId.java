@@ -1,4 +1,4 @@
-package cn.inctech.app.common.util.id;
+package org.ares.app.wxtck.common.util.id;
 
 /**
  * Twitter_Snowflake<br>

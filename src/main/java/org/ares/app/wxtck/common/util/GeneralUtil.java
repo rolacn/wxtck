@@ -17,8 +17,6 @@ import org.springframework.util.StringUtils;
 
 @Component()
 public class GeneralUtil {
-
-	
 	
 	public String randomNum4() {
 		return randomNum(4);

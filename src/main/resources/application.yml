@@ -5,18 +5,60 @@ spring:
     url: jdbc:mysql://localhost:3306/wxtck?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: wxtck
     password: wxtck
-    type: com.alibaba.druid.pool.DruidDataSource
+    type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    filters: stat
-    maxActive: 20
-    initialSize: 1
-    maxWait: 60000
-    minIdle: 1
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: select 'x'
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxOpenPreparedStatements: 20
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 15
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: DatebookHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+  jpa:
+    open-in-view: true
+    
+webapp:
+  use_pageHelper: false
+  use_kaptcha: false
+  content_type:
+    json: application/json;charset=utf-8
+  pc:
+    service: cn.inctech.app..*ServiceImp*
+    dao: org.ares.app..*(Dao|Mapper)*
+  security:
+    jdbc:
+      sql_query_user_by_name: select userid,password,true from v_user where userid =?
+      sql_query_auth_by_name: select username,authority from v_userauth where username=?
+      sql_query_user_by_mobile: select count(*) count from v_user where mobile=?
+  cors_allow_url: http://localhost:8080
+        
+kaptcha:
+  session:
+    key: kaptcha_session_code
+  border: no
+  obscurificator:
+    impl: com.google.code.kaptcha.impl.ShadowGimpy #com.google.code.kaptcha.impl.WaterRipple
+  noise:
+    impl: com.google.code.kaptcha.impl.NoNoise
+  image:
+    width: 100
+    height: 30
+  textproducer:
+    font:
+      size: 22
+      color: red
+      names: Arial,Courier
+    char:
+      length: 4
+      space: 8
+      string: abcefgijkmnoqrsuvwxyz13579
+  background:
+    clear:
+      from: 247,247,247
+      to: 247,247,247
+          
+  chkurl: /sys/img_code
+  input:
+      name: imgcode      
