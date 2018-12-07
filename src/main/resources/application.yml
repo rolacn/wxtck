@@ -18,7 +18,8 @@ spring:
       connection-test-query: SELECT 1
   jpa:
     open-in-view: true
-    
+  thymeleaf:
+    mode: LEGACYHTML5
 webapp:
   use_pageHelper: false
   use_kaptcha: false
