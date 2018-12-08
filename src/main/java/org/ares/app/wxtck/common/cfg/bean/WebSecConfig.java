@@ -52,6 +52,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     	}
 		http.authorizeRequests()
 		.antMatchers(kaptcha_url,UA_CSS, UA_JS, UA_FONTS, UA_FAVICON,U_LOGIN,U_LOGOUT,U_LOGIN_PAGE,UA_TEST,U_SMS_CODE+"/*",U_SYS_CODE+"/*",UA_USER_REGIST).permitAll()
+		.antMatchers("/wx*","/gci*").permitAll()
 		.antMatchers("/dev/**").permitAll()
 		.antMatchers("/","/sys/**").hasAnyAuthority("tourist","seller")
 		.antMatchers("/seller").hasAnyAuthority("seller")
@@ -82,7 +83,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
 		
 		http.headers().frameOptions().sameOrigin(); // 允许来自同一来源的 控制台的请求
 		//http.csrf().disable();
-        http.csrf().ignoringAntMatchers(U_LOGIN+"*",SYS_PATH+"/**",U_LOGOUT+"*","/tourist/**","/seller/**");
+        http.csrf().ignoringAntMatchers(U_LOGIN+"*",SYS_PATH+"/**",U_LOGOUT+"*","/tourist/**","/seller/**","/gci*","/wx*");
 	}
     
     static final String KEY = "org_ares";
