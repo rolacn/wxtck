@@ -1,6 +1,8 @@
 package org.ares.app.wxtck.common.util;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import javax.annotation.Resource;
@@ -20,6 +22,21 @@ import com.github.binarywang.utils.qrcode.QrcodeUtils;
 
 @Component()
 public class GeneralUtil {
+	
+	/**
+	 * 返回一个单机版的订单id
+	 * 规则:时间戳-openid-6位随机数
+	 * @param flagid
+	 * @return
+	 */
+	public String orderNum(String flagid) {
+		String r=null;
+		String r1=sdf.format(new Date());
+		String r2=flagid;
+		String r3=randomNum6();
+		r=r1+"-"+r2+"-"+r3;
+		return r;
+	}
 	
 	public String randomNum4() {
 		return randomNum(4);
@@ -114,5 +131,5 @@ public class GeneralUtil {
 	
 	static final int MIN_QRCODE_SIZE=100;
 	static final int DEFAULT_QRCODE_SIZE=200;
-	
+	final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 }

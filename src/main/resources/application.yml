@@ -62,4 +62,11 @@ kaptcha:
           
   chkurl: /sys/img_code
   input:
-      name: imgcode      
+      name: imgcode
+
+wechat:
+  mpAppId: wxd898xxxx
+  mchId: 1483xxxx
+  mchKey: C5245D70xxxxx
+  keyPath: /var/weixin_cert/h5.p12
+  payBackCallUrl: http://xxx.com/notify

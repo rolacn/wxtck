@@ -4,6 +4,8 @@ import javax.annotation.Resource;
 
 import org.ares.app.wxtck.StartApp;
 import org.ares.app.wxtck.common.security.rbac.dao.jpa.UserDao;
+import org.ares.app.wxtck.common.util.GeneralUtil;
+import org.ares.app.wxtck.sys.wx.pay.cfg.PayAccount;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest(classes=StartApp.class)
 public class StartAppTests {
 
-	@Test
+	/*@Test*/
 	public void test_Jpa() {
 		userDao.findAll().stream().forEach(e->log.info(e.getUsername()));
 		log.info(""+userDao.findAll().get(0).getRoles().get(0).getRess().get(0).getResurl());
@@ -30,6 +32,14 @@ public class StartAppTests {
 			});
 		});
 	}
+	
+	@Test
+	public void test() {
+		log.info(pa.getPayBackCallUrl());
+		log.info(g.orderNum("xhfslfsf8"));
+	}
 
 	@Resource UserDao userDao;
+	@Resource PayAccount pa;
+	@Resource GeneralUtil g;
 }

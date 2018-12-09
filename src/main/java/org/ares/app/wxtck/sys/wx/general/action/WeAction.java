@@ -1,12 +1,12 @@
-package org.ares.app.wxtck.sys.wx.action;
+package org.ares.app.wxtck.sys.wx.general.action;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.ares.app.wxtck.sys.wx.model.WxModel;
-import org.ares.app.wxtck.sys.wx.service.WxVerifyService;
+import org.ares.app.wxtck.sys.wx.general.model.WxModel;
+import org.ares.app.wxtck.sys.wx.general.service.WxVerifyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;

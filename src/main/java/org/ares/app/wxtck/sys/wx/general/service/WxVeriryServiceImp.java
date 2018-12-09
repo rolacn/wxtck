@@ -1,4 +1,4 @@
-package org.ares.app.wxtck.sys.wx.service;
+package org.ares.app.wxtck.sys.wx.general.service;
 
 import java.util.Map;
 
