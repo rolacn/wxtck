@@ -52,7 +52,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     	}
 		http.authorizeRequests()
 		.antMatchers(kaptcha_url,UA_CSS, UA_JS, UA_FONTS, UA_FAVICON,U_LOGIN,U_LOGOUT,U_LOGIN_PAGE,UA_TEST,U_SMS_CODE+"/*",U_SYS_CODE+"/*",UA_USER_REGIST).permitAll()
-		.antMatchers("/wx*","/gci*").permitAll()
+		.antMatchers("/wx/**").permitAll()
 		.antMatchers("/dev/**").permitAll()
 		.antMatchers("/","/sys/**").hasAnyAuthority("tourist","seller")
 		.antMatchers("/seller").hasAnyAuthority("seller")

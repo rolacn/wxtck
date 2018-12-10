@@ -9,6 +9,7 @@ import org.ares.app.wxtck.sys.wx.general.model.WxModel;
 import org.ares.app.wxtck.sys.wx.general.service.WxVerifyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
@@ -17,9 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequestMapping(value={"/wx"})
 public class WeAction {
 
-	@RequestMapping(value={"/wx"})
+	@RequestMapping(value={"/entry"})
 	public @ResponseBody String joinVerify(WxModel model){
 		String r="sign error";
 		Map<String,Object> params=new HashMap<>();
@@ -29,8 +31,26 @@ public class WeAction {
 		return r;
 	}
 	
+	/**
+	 * 微信网页授权跳转地址
+	 * @param model
+	 * @param tourist_func
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping(value={"/wte/{tourist_func}"})
+	public String wechatTicketEntry(String code,@PathVariable String tourist_func,Model m){
+		String r=TOURIST_WEB_FUNC_PREFIX+tourist_func;
+		
+		/*Map<String,String> data=rest.postForObject(getAccessToken(code), null, Map.class);
+		m.addAttribute("code", data.get("openid"));
+		log.info(data+"");*/
+		r="forward:"+r;
+		return r;
+	}
+	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value={"/gci"})
+	@RequestMapping(value={"/get_openid"})
 	public String getCustomerInfo(WxModel model,Model m){
 		String r="gci";
 		String code=model.getCode();
@@ -51,4 +71,5 @@ public class WeAction {
 	@Resource RestTemplate rest;
 	final static String APPID="wx4057b670e93e5309";
 	final static String APPSECRET="36929349adab7a64be75c66317fc85d6";
+	final static String TOURIST_WEB_FUNC_PREFIX="/tourist/";
 }
