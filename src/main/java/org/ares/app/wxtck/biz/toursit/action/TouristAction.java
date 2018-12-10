@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/tourist")
 public class TouristAction {
 
-	@RequestMapping("/toBuyTicker")
+	@RequestMapping("/toBuyTicket")
 	public String buyTicket() throws Exception{
 		return "tourist/buy";
 	}
