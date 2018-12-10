@@ -72,5 +72,10 @@ public class GlobalConfig {
 	public static final int RC_IP_ERROR=-208;//IP验证错误
 	
 	public static final String SMS_CODE_KEY_OF_CUR_SESSION="inctech_sms_code_key_of_cur_session";
+	
+	/***********************************platform*******************************************************/
+	public static final String ANDROID_PLATFORM="android";
+	public static final String WECHAT_PLATFORM="micromessenger";
+	public static final String IOS_PLATFORM="ios";
 
 }
