@@ -1,3 +1,18 @@
 qrcode
 	2018-12-06
 	https://blog.csdn.net/ajdxwz/article/details/82687817
+
+CREATE VIEW v_userauth AS 
+SELECT 
+  ur.username username,
+  r.rolename authority 
+FROM
+  s_user_role ur 
+  JOIN s_role r 
+    ON ur.roleid = r.roleid 
+UNION
+SELECT 
+   username,
+  'tourist' AS authority 
+FROM
+  b_tourist	

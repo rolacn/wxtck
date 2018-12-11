@@ -30,7 +30,7 @@ webapp:
     dao: org.ares.app..*(Dao|Mapper)*
   security:
     jdbc:
-      sql_query_user_by_name: select userid,password,true from v_user where userid =?
+      sql_query_user_by_name: select username,password,true from v_user where username =?
       sql_query_auth_by_name: select username,authority from v_userauth where username=?
       sql_query_user_by_mobile: select count(*) count from v_user where mobile=?
   cors_allow_url: http://localhost:8080
