@@ -60,7 +60,7 @@ public class WeAction {
 		if(userAgent.indexOf(WECHAT_PLATFORM)> 0||StringUtils.isEmpty(code=request.getParameter("code")))//is not wechat or code is empty
 			throw new AppSysException("an error occurred communicating with WeChat");
 		String openid=code;
-		UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(openid,openid);
+		UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(openid,"123456");
         token.setDetails(new WebAuthenticationDetails(request));
         Authentication authenticatedUser=authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);

@@ -5,9 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-import javax.annotation.Resource;
-
 import org.ares.app.wxtck.common.exception.AppSysException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -126,10 +125,14 @@ public class GeneralUtil {
 	}
 	
 	Random random=new Random();
-	
-	@Resource PasswordEncoder bcrPasswordEncoder;
+	PasswordEncoder bcrPasswordEncoder=new BCryptPasswordEncoder();
 	
 	static final int MIN_QRCODE_SIZE=100;
 	static final int DEFAULT_QRCODE_SIZE=200;
 	final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+	
+	public static void main(String[] args) {
+		GeneralUtil g=new GeneralUtil();
+		System.out.println(g.buildBcrPass("123456"));
+	}
 }
