@@ -53,14 +53,11 @@ public class WeAction {
 	public String wechatTicketEntry(String code,@PathVariable String tourist_func,Model m,HttpServletRequest request){
 		String r=TOURIST_WEB_FUNC_PREFIX+tourist_func;
 		
-		/*Map<String,String> data=rest.postForObject(getAccessToken(code), null, Map.class);
-		m.addAttribute("code", data.get("openid"));
-		log.info(data+"");*/
 		String userAgent = request.getHeader("user-agent").toLowerCase();
-		if(userAgent.indexOf(WECHAT_PLATFORM)> 0||StringUtils.isEmpty(code=request.getParameter("code")))//is not wechat or code is empty
-			throw new AppSysException("an error occurred communicating with WeChat");
-		String openid=code;
-		UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(openid,"123456");
+		if(userAgent.indexOf(WECHAT_PLATFORM)> 0||StringUtils.isEmpty(code=request.getParameter(KEY_CODE)))//is not wechat or code is empty
+			throw new AppSysException(ERR_MSG_BE_WX_CALLED);
+		String openid=code/*getOpenid(code)*/;
+		UsernamePasswordAuthenticationToken token=new UsernamePasswordAuthenticationToken(openid,V_PASS);
         token.setDetails(new WebAuthenticationDetails(request));
         Authentication authenticatedUser=authenticationManager.authenticate(token);
         SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
@@ -68,30 +65,35 @@ public class WeAction {
 		r="forward:"+r;
 		return r;
 	}
-	
+
+	/**
+	 * code is not null,have been inspected already.
+	 * @param code
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value={"/get_openid"})
-	public String getCustomerInfo(WxModel model,Model m){
-		String r="gci";
-		String code=model.getCode();
-		log.info("code is:"+model.getCode());
-		Map<String,String> data=rest.postForObject(getAccessToken(code), null, Map.class);
-		m.addAttribute("code", data.get("openid"));
-		log.info(data+"");
+	String getOpenid(String code){
+		String r=null;
+		Map<String,String> data=rest.postForObject(UrlForAccessToken(code), null, Map.class);
+		r= data.get(KEY_OPENID);
+		log.info("openid is:"+r);
 		return r;
 	}
 	
-	String getAccessToken(String code){
-		String r="https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
-		r=r.replace("APPID", APPID).replace("SECRET", APPSECRET).replace("CODE", code);
-		return r;
+	String UrlForAccessToken(String code){
+		return ACCESS_TOKEN_URL.replace("APPID", APPID).replace("SECRET", APPSECRET).replace("CODE", code);
 	}
 	
 	@Resource WxVerifyService verify;
 	@Resource RestTemplate rest;
 	@Resource AuthenticationManager authenticationManager;
 	
+	final static String KEY_OPENID="openid";
+	final static String KEY_CODE="code";
+	final static String V_PASS="ares@20196yhn^YHN";
 	final static String APPID="wx4057b670e93e5309";
 	final static String APPSECRET="36929349adab7a64be75c66317fc85d6";
 	final static String TOURIST_WEB_FUNC_PREFIX="/tourist/";
+	final static String ACCESS_TOKEN_URL="https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
+	final static String ERR_MSG_BE_WX_CALLED="an error occurred communicating with WeChat";
 }

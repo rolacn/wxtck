@@ -133,6 +133,6 @@ public class GeneralUtil {
 	
 	public static void main(String[] args) {
 		GeneralUtil g=new GeneralUtil();
-		System.out.println(g.buildBcrPass("123456"));
+		System.out.println(g.buildBcrPass("ares@20196yhn^YHN"));
 	}
 }
